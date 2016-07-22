@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     View,
-    Text
+    Text,
+    TextInput,
+    TouchableHighlight,
+    ActivityIndicatorIOS
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -10,20 +13,57 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        padding: 30,
         backgroundColor: '#F5FCFF',
     },
     welcome: {
         fontSize: 20,
         textAlign: 'center',
         margin: 10,
+    },
+    searchInput: {
+        height: 50,
+        fontSize: 23,
+        padding: 4,
+        borderWidth: 1,
+        borderRadius: 8,
+        borderColor: "blue",
+        textAlign: 'center',
+        color: "black"
     }
 });
 
 export default class Main extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            isLoading: false,
+            error: false
+        }
+    }
+
+    handleChange(event) {
+        this.setState({
+            username: event.nativeEvent.text
+        })
+    }
+
+    handleSubmit(event){
+        this.setState({
+            isLoading: true
+        })
+        console.log('SUBMIT', this.state.username)
+    }
+
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.welcome}>Route Test</Text>
+                <Text style={styles.welcome}>Search for a Github User</Text>
+                <TextInput style={styles.searchInput} value={this.state.username} onChange={this.handleChange.bind(this)} />
+                <TouchableHighlight onPress={this.handleSubmit.bind(this)} underlayColor="white">
+                    <Text>Search</Text>
+                </TouchableHighlight>
             </View>
         )
     }
