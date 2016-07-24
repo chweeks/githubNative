@@ -8,6 +8,7 @@ import {
     ActivityIndicatorIOS
 } from 'react-native';
 import Api from '../Utils/api';
+import Dashboard from './Dashboard';
 
 const styles = StyleSheet.create({
     container: {
@@ -63,7 +64,16 @@ export default class Main extends Component {
                     });
                 }
                 else {
-                    console.log(res);
+                    this.props.navigator.push({
+                        title: this.state.username,
+                        component: Dashboard,
+                        passProps: {userInfo: res}
+                    });
+                    this.setState({
+                        isLoading: false,
+                        error: false,
+                        username: ''
+                    })
                 }
             })
     }
