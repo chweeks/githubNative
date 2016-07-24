@@ -7,6 +7,7 @@ import {
     TouchableHighlight,
     ActivityIndicatorIOS
 } from 'react-native';
+import Api from '../Utils/api';
 
 const styles = StyleSheet.create({
     container: {
@@ -53,7 +54,18 @@ export default class Main extends Component {
         this.setState({
             isLoading: true
         })
-        console.log('SUBMIT', this.state.username)
+        Api.getBio(this.state.username)
+            .then((res) => {
+                if(res.message === 'Not Found'){
+                    this.setState({
+                        error: 'User Not Found',
+                        isLoading: false
+                    });
+                }
+                else {
+                    console.log(res);
+                }
+            })
     }
 
     render() {
